@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="../bootstrap-3.3.7/dist/css/bootstrap.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .jumbotron {
+      width: 850px;
+      margin: 0 auto;
+      margin-top: 60px;
+      background: #fff;
+      padding-bottom: 80px;
+      margin-bottom: 40px;
+    }
+
+    .jumbotron>h1 {
+      text-align: center;
+      color: red;
+    }
+
+    .form-group button {
+      background-color: red;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="jumbotron">
+    <h1>nubia</h1>
+    <div class="login">
+      <div class="form-horizontal">
+        <div class="form-group">
+          <label for="username" class="col-sm-2 control-label">用户名</label>
+          <div class="col-sm-8">
+            <input type="text" name="name" class="form-control inputWidth" placeholder="用户名">
+            <span class="spanspan" name="nameSpan"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password" class="col-sm-2 control-label">密码</label>
+          <div class="col-sm-8">
+            <input type="password" name="pwd1" class="form-control inputWidth" placeholder="密码">
+            <span class="spanspan"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="col-sm-2 control-label">确认密码</label>
+          <div class="col-sm-8">
+            <input type="password" name="pwd2" class="form-control inputWidth" placeholder="确认密码">
+            <span class="spanspan"></span>
+
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="col-sm-2 control-label">验证码</label>
+          <div class="col-sm-8">
+            <input type="text" name="vc" class="form-control inputWidth" id="ac" placeholder="验证码"> <a id="sc"></a><br>
+            <span class="spanspan" name="vcSpan"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-default">注册</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/tools.js"></script>
+  <script>
+    const oIptName = document.querySelector('[name="name"]');
+      const oIptPwd1 = document.querySelector('[name="pwd1"]');
+      const oIptPwd2 = document.querySelector('[name="pwd2"]');
+      const oIptVc = document.querySelector('[name="vc"]');
+
+      const oIptVcSpan = document.querySelector('[name="vcSpan"]');
+      const oIptNameSpan = document.querySelector('[name="nameSpan"]');
+
+      let bool;
+
+      // 1,给验证码input之后的span标签,写入验证码
+      const oVcA = document.querySelector('a');
+      // 给验证码后的span标签,写入验证码内容
+      oVcA.innerHTML = mySetVc();
+      // 点击标签,重新输入新的验证码
+      oVcA.addEventListener('click' , ()=>{
+        oVcA.innerHTML = mySetVc();
+      })
+
+      /*
+        账号标签,失去焦点,验证账号是否存在
+        给账号input,添加失去焦点的操作
+      */
+
+      oIptName.addEventListener( 'change' , ()=>{
+        // 获取输入的账号
+        let name = oIptName.value;
+
+        // 发送ajax请求
+        $.ajax({
+          url:'../server/goods_select.php',
+          type:'post',
+          data:{userName:name},
+          dataType:'json',
+          success:result=>{
+            // 根据执行结果,写入提示信息
+            if(result.res === 1){
+              // 正好可以使用
+              oIptNameSpan.innerHTML = '账号可以使用';
+              bool = true;
+            }else{
+              oIptNameSpan.innerHTML = '账号不能使用';
+              bool = false;
+            }
+          }
+        })
+      })
+
+
+
+      // 2,给标签添加事件
+      // 如果是没有使用form表单,就可以直接给button按钮添加点击事件
+      // 如果使用了form表单,就必须要给 form标签添加 submit 事件,并且阻止默认事件执行
+      const oBtn = document.querySelector('button');
+
+      oBtn.addEventListener('click' , ()=>{
+        // 如果账号重复,也就是 bool 是 false,直接执行return
+        if(bool === false){
+          return;
+        }
+
+        // 1, 获取所有标签的数据
+        let nameVal = oIptName.value;
+        let pwd1Val = oIptPwd1.value;
+        let pwd2Val = oIptPwd2.value;
+        let vcVal = oIptVc.value;
+
+        // 2, 根据数据做验证
+        // 可以任意写你们喜欢的验证效果
+        
+        // 主要是 如果验证不通过,要使用 return 来终止程序的执行
+        // 不执行 之后的 ajax请求的发送
+
+        // 统一大小写,就不用区分验证码的大小写了
+        
+        // if( vcVal.toUpperCase() !== oVcA.innerHTML.toUpperCase() ){
+        //   oIptVcSpan.innerHTML = '验证码错误';
+        //   return;
+        // }else{
+        //   oIptVcSpan.innerHTML = '';
+        // }
+
+        // 3, 如果之前的验证判断都通过了,可以发送ajax请求,来执行对应的程序
+        $.ajax({
+          url:'../server/goods_res.php',
+          type:'post',
+          data:{userName : nameVal , userPwd : pwd1Val},
+          dataType:'json',
+          success : result=>{
+            // 注册成功,返回首页面
+            // 注册失败,继续注册
+            if(result.res === 1){
+              // 返回值是1,表示注册成功
+              window.alert('注册成功,点击确定,跳转首页面')
+              window.location.href = '../index.html';
+            }else{
+              // 返回值不是1,表示注册失败
+              window.alert('注册失败,用户名重复,请您重新设定用户名,玩命继续注册');
+            }
+
+          }
+        })
+      })
+
+  </script>
+</body>
+
+</html>

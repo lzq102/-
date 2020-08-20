@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="../bootstrap-3.3.7/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../jquery-pagination/pagination.css">
+  <link rel="stylesheet" href="../css/list.css">
+  <style>
+    .breadcrumb {
+      padding-left: 6px;
+      padding-right: 6px;
+    }
+
+    li.list-item {
+      width: 260px;
+      float: left;
+      margin-right: 10px;
+    }
+
+    h3 {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    p {
+      font-size: 30px;
+      color: red;
+    }
+    .M-box{margin-left: 30%;}
+    .M-box{
+      position: fixed;
+      top: 0px;
+      left: 0px;
+    }
+    .panel{
+      margin-top: 50px;
+    }
+  </style>
+  </head>
+
+  <body>
+  
+    <div class="M-box m-style"></div>
+
+    <div class="container">
+      <!-- ul中的内容是动态写入的 -->
+      <ul></ul>
+    </div>
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/tools.js"></script>
+    <script src="../jquery-pagination/jquery.pagination.js"></script>
+    <script>
+      // 1,获取地址栏数据信息
+      var valObj = getUrlVal();
+
+    // 2,调用函数,生成第一次的页面内容
+    // 是 第一页的内容
+    getAjaxVal( valObj , 1 , 8 );
+
+
+    // 定义一个函数来实现ajax请求,生成对应的页面内容
+    // 参数1: 获取的地址栏信息对象
+    // 参数2: 当前页数
+    // 参数3: 每页的数据数量
+    function getAjaxVal(object , page , line ) {
+
+
+     
+      // 2,根据获取的参数,向数据库发起请求
+      // 实际的查询结果,要分页显示
+      // 后端会执行分页查询,我们只需要发送参数即可
+      // 需要传参3个参数
+      // cat_on_id  查询的商品分类
+      // page       当前显示第几页内容   起始显示第一页内容
+      // line       每页显示几条数据     根据实际项目需求设定,当前设定为8个
+
+      $.ajax({
+        url: '../server/goods_list.php',
+        // 表示页数的参数不同,获取的执行结果也不同
+        data: { cat_one_id: object.cat_one_id, page: page, line: line },
+        type: 'get',
+        dataType: 'json',
+        success: function (result) {
+          // console.log(1);
+          console.log(result)
+
+          // 根据查询结果的数组,生成页面内容
+          // 生成的li,写入到ul中
+
+          // 根据查询结果的数组,渲染生成对应的html页面内容
+          // 点击 查看商品详情 按钮, 跳转至 详情页 detail.html
+          // 并且要传参 goods_id 索引数据
+      
+          let str = "";
+
+          result.forEach((v) => {
+            str += `
+      <li class="list-item">
+        <div class="panel panel-primary">
+          <div class="panel-body">
+            <ol class="breadcrumb">
+              <li><a href="#">${v.cat_one_id}</a></li>
+              <li><a href="#">${v.cat_two_id}</a></li>
+              <li class="active">${v.cat_three_id}</li>
+            </ol>
+          </div>
+          <div class="panel-footer">
+            <div class="row">
+              <div class="">
+                <div class="thumbnail">
+                  <img src="${v.goods_big_logo}" alt="...">
+                  <div class="caption">
+                    <h3>${v.goods_name}</h3>
+                    <p>
+                      <i class="glyphicon glyphicon-yen"></i>
+                      <span>${v.goods_price}</span>
+                    </p>
+                    <p><a href="javascript:;" class="btn btn-primary" role="button">查找相似商品</a> 
+                       <a href="./detail.html?goods_id=${v.goods_id}" class="btn btn-danger" role="button">查看商品详情</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+          `;
+          })
+
+          // 循环结束,将str写入到ul中
+          $('.container > ul').html(str);
+        
+        
+          // 请求成功,根据请求结果,生成分页显示内容
+          $('.M-box').pagination({
+            mode: 'fixed',                   // 固定分页按钮的数量
+            pageCount : result[0].sumPage,   // 查询结果中的总页数
+            totalData : result[0].row,       // 查询结果中的数据中数据
+            current : result[0].page,        // 当前页数
+            showData : line,                 // 每页的数据数量
+            count : 5 ,                      // 设定总显示的页数
+            coping : true,                   // 显示首页末页
+            isHide : true,                   // 总页数为0或者1时,隐藏控件
+            keepShowPN : true,               // 显示上一页下一页
+            homePage : '首页',               // 首页的文本内容
+            endPage : '末页',                // 首页的文本内容
+            prevContent : '上一页',          
+            nextContent : '下一页',
+            callback: function(res){
+              // 在插件定义的回调函数中,形参里存储数据信息
+
+              // 获取点击分页显示按钮,要显示的页数信息
+              // 插件定义好的,直接使用就可以了
+              let p = res.getCurrent(); 
+
+              // 可以根据新的页数,发起新的请求,渲染生成新的页面内容
+
+              getAjaxVal(valObj , p , 8);
+            }
+          });
+        }        
+      })
+    }
+
+
+
+
+  </script>
+</body>
+
+</html>
+
+
+<!-- <li class="list-item">
+        <div class="panel panel-primary">
+          <div class="panel-body">
+            <ol class="breadcrumb">
+              <li><a href="#">一级分类</a></li>
+              <li><a href="#">二级分类</a></li>
+              <li class="active">三级分类</li>
+            </ol>
+          </div>
+          <div class="panel-footer">
+            <div class="row">
+              <div class="">
+                <div class="thumbnail">
+                  <img src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i3/2898933862/O1CN01ExuNHp1eOq9TKoRh6_!!2898933862.jpg_580x580Q90.jpg_.webp" alt="...">
+                  <div class="caption">
+                    <h3>商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述商品描述</h3>
+                    <p>
+                      <i class="glyphicon glyphicon-yen"></i>
+                      <span>1234.56</span>
+                    </p>
+                    <p><a href="javascript:;" class="btn btn-primary" role="button">查找相似商品</a> <a href="#" class="btn btn-danger" role="button">查看商品详情</a></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li> -->

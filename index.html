@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>努比亚手机-官方网站</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./bootstrap-3.3.7/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./iconfont/iconfont.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            max-width: 2560px;
+            margin: 0 auto;
+            overflow: hidden;
+            overflow-y: auto;
+        }
+        ol,
+        ul,
+        li {
+            list-style: none;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+
+        }
+        .container {
+            width: 1205px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .container-fluid {
+            position: relative;
+        }
+
+        /* header */
+        #header {
+            height: 60px;
+            line-height: 60px; 
+            
+        }
+
+        #header .head_nav {
+            display: flex;            
+        }
+
+        #header .logo>a {
+            width: 240px;
+            float: left;           
+        }
+       
+        #header .logo img {
+            width: 114px;
+            height: 28px;
+            margin-left: 60px;
+            margin-top: 12px;
+
+        }
+
+        #header .nav_ul_content {
+            width: 720px;
+            display: flex;
+            justify-content: space-between;
+        }
+       
+        #header .user {
+           
+            cursor: pointer;
+            padding-left: 10px;
+
+        }
+    
+        #header .car cart>a {
+            color: white;
+        }
+
+
+
+        /* banner */
+
+       
+
+        .banner {
+            height: 550px;
+            position: relative;
+            margin: auto;
+            margin-bottom: 10px;
+        }
+
+        .banner ul {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .banner ul li {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            /* 过度属性也可以实现 move运动函数也可以实现 */
+            transition: all 1s linear;
+        }
+
+        .banner ol {
+            padding: 0 10px;
+            height: 40px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
+        .banner ol li {
+            width: 40px;
+            height: 2px;
+            background-color: #555;
+            position: relative;
+            top: 0px;
+            /* border: 2px transparent solid; */
+            border-color: #555;
+            vertical-align: middle;
+            -webkit-transition: all .3s ease;
+            -moz-transition: all .3s ease;
+            -ms-transition: all .3s ease;
+            transition: all .3s ease;
+            cursor: pointer;
+        }
+
+        .banner ol li:hover {
+            background: seashell;
+
+        }
+
+        .banner ol li.active {
+            width: 40px;
+            height: 2px;
+            /* background: transparent; */
+            background-color: #e95f46;
+            border-color: #e95f46;
+        }
+
+        .banner div {
+            width: 100%;
+            height: 50px;
+            position: absolute;
+            left: 0px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        .banner .div>:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+            border-radius: 50%;
+        }
+
+        .banner div a {
+            text-shadow: none;
+            font-size: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .con {
+            margin-bottom: 10px;
+            height: 550px;
+            margin-bottom: 10px;
+            position: relative;
+            color: white;
+        }
+
+        .con>div {
+            position: absolute;
+            top: 50%;
+            left: 17%;
+            height: 272px;
+            width: 296px;
+            text-align: center;
+        }
+
+        .con>div>h1 {
+            font-size: 48px;
+            font-weight: 700;
+            padding-bottom: 12px;
+        }
+
+        .con>div>p {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .con>div>.price_num {
+            font-weight: 500;
+        }
+
+        .con>div>.buy {
+            color: #fff;
+            transition: .25s;
+        }
+
+
+        /* content */
+        .content {
+            margin-bottom: 10px;
+        }
+
+        .content>div {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+
+        .content>div>li>img {
+            width: 748px;
+            height: 460px;
+        }
+
+        .content>div>li:nth-child(3) {
+            margin-top: 8px;
+        }
+
+        .content>div>li:nth-child(4) {
+            margin-top: 8px;
+        }
+
+        /* list */
+        .list {
+            height: 550px;
+            margin-bottom: 10px;
+            position: relative;
+            color: white;
+        }
+
+        .list>div {
+            position: absolute;
+            top: 50%;
+            left: 17%;
+            height: 272px;
+            width: 296px;
+            text-align: center;
+            font-weight: 900;
+        }
+
+        /* nav */
+
+        .nav{margin-bottom: 10px;height: 550px;background: #f0f0f0;}
+
+        .nav>ul{width: 100%;display: flex;justify-content: space-evenly; margin-top:80px ; }
+        .nav>ul>li>img{width: 430px;height:287px;}
+        
+
+
+    /*  footer */
+    #footer .footer-nav-list{ margin-top: 41px;}
+    #footer .footer-nav-list dl{ float:left; width:160px;}
+    #footer .footer-nav-list dt{ color:#424242; line-height: 14px; margin-bottom: 24px;}
+    #footer .footer-nav-list dd{ font-size:12px; line-height: 28px;}
+    #footer .footer-nav-phone{  margin-top:40px; }
+    #footer .footer-nav-phone h3{ color:#ff6700; font-size:18px;}
+    #footer .footer-nav-phone p{ margin:10px 0;}
+    #footer .footer-info{ margin-top:30px; padding-bottom:40px;}
+    
+   
+    #footer .footer-info-content div{ margin:10px 0;}
+    #footer .footer-info-content p{ line-height: 18px;}
+    #footer .footer-info-content div:last-of-type a{ float:left; width:83px; height: 28px;}
+    </style>
+</head>
+
+<body>
+    <!-- header -->
+    <div id="header" class="container">
+        <ul class="head_nav ">
+            <li class="logo">
+                <a href="">
+                    <img src="https://oss.static.nubia.cn/active/5dae6dd070bfa59.png">
+                </a>
+            </li>
+            <ul class="nav_ul_content">
+                <li>
+                    <a href="">Play
+                    </a>
+                </li>
+                <li>
+                    <a href="">Z系列</a>
+                </li>
+                <li>
+                    <a href="">红魔</a>
+                </li>
+                <li>
+                    <a href="">智能生态</a>
+                </li>
+                <li>
+                    <a href="">品牌</a>
+                </li>
+                <li>
+                    <a href="">服务</a>
+                </li>
+                <li>
+                    <a href="">社区</a>
+                </li>
+                <li>
+                    <a href="./pages/xiangqing.html">体验店</a>
+                </li>
+
+
+            <li class="user">
+                <a href="JavaScript:;"  name="login">登录</a>
+            </li>
+            <li class="user">
+                <a href="./index.html" name="back">退出登录</a>
+            </li>
+            <li class="car cart">
+                <a href="./pages/res.html">注册</a>
+            </li>
+            <li class="search">
+                <a href="JavaScript:;" name="buyCar" class="iconfont icon-gouwuchezhengpin" ></a>
+            </li>
+
+    </div>
+
+
+    <!-- banner -->
+    <div class="banner">
+        <ul>
+            <li style="opacity: 1;"><img src="./img/banner1.jpg" alt=""></li>
+            <li><img src="./img/banner2.jpg" alt=""></li>
+            <li><img src="./img/banner3.jpg" alt=""></li>
+        </ul>
+        <ol>
+        </ol>
+        <div>
+            <a class="glyphicon glyphicon-menu-left" href="JavaScript:;" name="left"></a>
+            <a class="glyphicon glyphicon-menu-right" href="JavaScript:;" name="right"></a>
+        </div>
+    </div>
+
+    <!-- con -->
+    <div class="con">
+        <img src="./img/banner4.jpg" alt="">
+        <div>
+            <h1>红魔5G</h1>
+            <p>144Hz超竞屏|高通骁龙865 </p>
+            <p>
+                <span class="price_num">￥3799起 </span>
+            </p>
+            <a class="buy" href="">立即购买</a><br>
+            <a style="color:#fff;" class="more" href="">了解更多 ></a>
+        </div>
+    </div>
+
+    <!-- content -->
+
+    <div class="content">
+        <div>
+            <li>
+                <img src="https://oss.static.nubia.cn/active/5f223842d992780.jpg" alt="">
+            </li>
+            <li>
+                <img src="https://oss.static.nubia.cn/active/5e9fad536efc022.jpg" alt="">
+            </li>
+            <li>
+                <img src="https://oss.static.nubia.cn/active/5e9fad536a1c051.jpg" alt="">
+            </li>
+            <li>
+                <img src="https://oss.static.nubia.cn/active/5ec78d90cc96c21.png" alt="">
+            </li>
+        </div>
+
+    </div>
+    <!-- list -->
+    <div class="list">
+        <img src="./img/banner5.jpg" alt="">
+        <div>
+            <h1>nubia WATCH</h1>
+            <p>刚柔并济 表现不凡</p>
+            <p>努比亚WATCH柔性手表</p>
+            <p>
+                <span class="price_num">￥1799起 </span>
+            </p>
+            <a href="">立即预约</a>
+        </div>
+    </div>
+
+    <!-- nav -->
+    <div class="nav">
+            <ul>
+                <li>
+                        <img src="./img/con1.jpg" alt="">
+                        <p>产品热评</p>
+                        <h4>『玩转nubia UI』个性熄屏，自己掌控！</h4>
+                        <a href="">了解更多></a>
+                </li>
+                <li>
+                        <img src="./img/con2.jpg" alt="">
+                        <p>产品热评</p>
+                        <h4>『玩转nubia UI』个性熄屏，自己掌控！</h4>
+                        <a href="">了解更多></a>
+                </li>
+                <li>
+                        <img src="./img/con3.jpg" alt="">
+                        <p>产品热评</p>
+                        <h4>『玩转nubia UI』个性熄屏，自己掌控！</h4>
+                        <a href="">了解更多></a>
+                </li>
+            </ul>
+    </div>
+                
+               
+<!-- footer -->
+    <footer id="footer" class="container">
+        <div class="footer-nav clear">
+            <div class="footer-nav-list l">
+                <dl>
+                    <dt>关于我们</dt>
+                    <dd><a href="#">关于nubia</a></dd>
+                    <dd><a href="#">联系我们</a></dd>
+                    <dd><a href="#">合作伙伴</a></dd>
+                    <dd><a href="#">企业购</a></dd>
+                </dl>
+                <dl>
+                    <dt>手机</dt>
+                    <dd><a href="#">nubia Play</a></dd>
+                    <dd><a href="#">红魔5G</a></dd>
+                    <dd><a href="#">红魔5G氘锋透明版</a></dd>
+                    <dd><a href="#">红魔3S</a></dd>
+                    <dd><a href="#">Z20</a></dd>
+                    <dd><a href="#">中兴手机</a></dd>
+                </dl>
+                <dl>
+                    <dt>热门活动</dt>
+                    <dd><a href="#">努比亚会员</a></dd>
+                    <dd><a href="#">NB码通道</a></dd>
+                    <dd><a href="#">以旧换新</a></dd>
+                    <dd><a href="#">全民分销</a></dd>
+                </dl>
+                <dl>
+                    <dt>服务支持</dt>
+                    <dd><a href="#">售后服务</a></dd>
+                    <dd><a href="#">售后网点</a></dd>
+                    <dd><a href="#">特色服务</a></dd>
+                    <dd><a href="#">软件下载</a></dd>
+                    <dd><a href="#">产品安全</a></dd>
+                    <dd><a href="#">云服务</a></dd>
+                </dl>
+            </div>
+            <div class="footer-nav-phone r">
+                <p>全国服务热线</p>
+                <h3>400-700-6600</h3>
+                <p>周一至周日 8:00-20:30 <br>（全年无休）</p>
+                <div><i>关注我们</i> <i class="iconfont icon-icon-test1"></i> <i class="iconfont icon-icon-test"></i></div>
+            </div>
+        </div>
+        <div class="footer-info clear">
+            <div class="footer-info-content l">
+                <p>
+                    2012-2020 深圳市努比亚信息技术有限公司 版权所有  |  <br>
+                    ICP经营许可证编号：粤B2-20120688  |  粤公网安备 44030502000309号  | 隐私政策   |  关于Cookie 营业执照<br>
+                </p>
+            </div>
+        </div>
+    </footer>
+            
+           <script src="./js/banner.js"></script>
+           <script src="./js/tools.js"></script>
+           <script>
+               const oBanner = document.querySelector('.banner');
+               const ban = new setOpacity(oBanner);
+               ban.init();
+
+
+               // 退出登录:
+               // 设定时间是当前事件 -时间,让本地的cookie过期
+               var oBtnBack = document.querySelector('[name="back"]');
+               oBtnBack.addEventListener('click' , ()=>{
+                   console.log(123)
+                   window.localStorage.clear();
+               // 设定时效是负数,直接时效,被删除
+               mySetCookie('login' , 1 , -1);
+               window.alert('退出登录成功');
+               });
+
+
+
+               // 跳转购物车:如果有登录信息,也就是有login 可以跳转至 购物车页面
+               // 否则,不跳转,去登录页面
+               var oBtnBuyCar = document.querySelector('[name="buyCar"]');
+
+               oBtnBuyCar.addEventListener('click' , ()=>{
+               // 获取cookie对象
+               var cookieObj = myGetCookie();
+
+               // 如果没有login,调用结果是undefined
+               if( cookieObj.login === undefined){
+               let bool = window.confirm('您还没有登录,点击确认,跳转登录页面,点击取消,没有跳转');
+
+               if(bool === true){
+               window.location.href = `./pages/login.html?url=${window.location.href}`;
+               }
+
+               }else{
+               window.location.href = './pages/cart.html';
+               }
+
+})
+
+
+              
+             // 给登录按钮添加点击事件
+      const oBtnLogin = document.querySelector('[name="login"]');
+      oBtnLogin.addEventListener('click' , function(){
+        window.location.href = `./pages/login.html?url=${window.location.href}`;
+      })
+</script>
+</body>
+
+</html>
